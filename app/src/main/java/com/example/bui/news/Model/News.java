@@ -4,13 +4,22 @@ public class News {
     private String Title;
     private int Id;
     private String Content;
-
+    private String[] Recommend;
     public News() {}
 
-    public News(String title, int id, String content) {
+    public News(int id, String title, String content, String[] recommend) {
         Title = title;
         Id = id;
         Content = content;
+        Recommend = recommend;
+    }
+
+    public String[] getRecommend() {
+        return Recommend;
+    }
+
+    public void setRecommend(String[] recommend) {
+        Recommend = recommend;
     }
 
     public News(int id, String title) {

@@ -1,8 +1,13 @@
 package com.example.bui.news.View;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,20 +17,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.bui.news.Controller.LoadMoreHandler;
+import com.example.bui.news.Controller.MainController;
+import com.example.bui.news.Controller.ThreadGetMoreData;
+import com.example.bui.news.Model.News;
 import com.example.bui.news.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView textViewPolictic;
-    private TextView textViewEntertainment;
-    private TextView textViewSport;
-    private TextView textViewTech;
-    private TextView textViewBusiness;
+    private ListView listViewNews;
+    private List<News> listNews;
+    private NewsListAdapter adapter;
+    public View ftView;
+    public LoadMoreHandler loadMoreHandler;
+//    private boolean isLoading = false;
+
+    private MainController mainController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +69,49 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        textViewBusiness = (TextView) findViewById(R.id.textViewBusiness);
-        textViewEntertainment = (TextView) findViewById(R.id.textViewEntertainment);
-        textViewPolictic = (TextView) findViewById(R.id.textViewPolitics);
-        textViewTech = (TextView) findViewById(R.id.textViewTech);
-        textViewSport = (TextView) findViewById(R.id.textViewSport);
+        listViewNews = (ListView) findViewById(R.id.listViewNews);
+
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ftView = li.inflate(R.layout.footer_view, null, false);
+
+        mainController = new MainController(MainActivity.this, getApplicationContext(), listViewNews, adapter, loadMoreHandler);
+        mainController.dropNewsTable();
+        //init News
+        mainController.getPages(1,9);
+        listNews = mainController.getAllNews();
+//        Log.i("MainActivity","listNews[1] - Title: " + listNews.get(1).getTitle());
+
+
+//        adapter = new NewsListAdapter(getApplicationContext(), listNews);
+//        listViewNews.setAdapter(adapter);
+        loadMoreHandler = new LoadMoreHandler(ftView, listViewNews, adapter);
+
+//        Intent intent = new Intent(this, ContentActivity.class);
+//        this.startActivity(intent);
+
+
+        listViewNews.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int count = 0;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                count = 0;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.i("MainController,onScroll","scroll event");
+                Log.i("MainController,onScroll","view.getLastVisiblePosition() = " + view.getLastVisiblePosition());
+                Log.i("MainController,onScroll","visibleItemCount = " + visibleItemCount);
+
+                //Check when scroll to last item in ListView, in this tut, init data in listview = 2
+                if(view.getLastVisiblePosition() ==  totalItemCount - 1 && listViewNews.getCount() >= 9 && ++count <= 1){
+                    Log.i("MainController,onScroll","scroll event thread");
+                    Log.i("MainController,onScroll","listViewNews.getCount() = " + listViewNews.getCount());
+                    Thread thread = new ThreadGetMoreData((LoadMoreHandler) loadMoreHandler, MainActivity.this, getApplicationContext(), listViewNews, adapter);
+                    thread.start();
+                }
+            }
+        });
     }
 
     @Override

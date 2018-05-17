@@ -10,44 +10,8 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <TextView
-        android:id="@+id/textViewPolitics"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_weight="1"
-        android:background="@drawable/politics"
-        android:text="Politics" />
-
-    <TextView
-        android:id="@+id/textViewTech"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_weight="1"
-        android:text="Tech"
-        android:background="@drawable/tech"
-        />
-
-    <TextView
-        android:id="@+id/textViewSport"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_weight="1"
-        android:background="@drawable/sports"
-        android:text="Sport" />
-
-    <TextView
-        android:id="@+id/textViewBusiness"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_weight="1"
-        android:text="Business"
-        android:background="@drawable/business"/>
-
-    <TextView
-        android:id="@+id/textViewEntertainment"
-        android:layout_width="wrap_content"
-        android:layout_height="164dp"
-        android:layout_weight="1"
-        android:text="Entertainment"
-        android:background="@drawable/entertainment"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewNews"></ListView>
 </LinearLayout>

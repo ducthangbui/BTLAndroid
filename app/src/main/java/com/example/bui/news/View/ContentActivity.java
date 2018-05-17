@@ -1,15 +1,21 @@
 package com.example.bui.news.View;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.bui.news.R;
+import com.example.bui.news.Service.GetNewsService;
 
 public class ContentActivity extends AppCompatActivity {
+    private TextView textViewContent;
+    private TextView textViewRecommend;
+    private TextView textViewRecommend2;
+    private TextView textViewRecommend3;
+    private TextView textViewTitleRecommend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +24,40 @@ public class ContentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        textViewContent = (TextView) findViewById(R.id.textViewContent);
+        textViewRecommend = (TextView) findViewById(R.id.textViewRecommend);
+        textViewRecommend2 = (TextView) findViewById(R.id.textViewRecommend1);
+        textViewRecommend3 = (TextView) findViewById(R.id.textViewRecommend2);
+        textViewTitleRecommend = (TextView) findViewById(R.id.textViewTitleRecommend);
+
+        textViewTitleRecommend.setText("Ralated News");
+
+        String url = "http://203.162.88.120:443/getByTitle/Israel%20looks%20to%20US%20for%20bank%20chief";
+        new GetNewsService(this.textViewContent, this.textViewRecommend, this.textViewRecommend2, this.textViewRecommend3).execute(url);
+
+        textViewRecommend = (TextView) findViewById(R.id.textViewRecommend);
+
+        textViewRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+
+                Log.i("NewsRecommend","Recommend1 click event");
+            }
+        });
+
+        textViewRecommend2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i("NewsRecommend","Recommend2 click event");
+            }
+        });
+
+        textViewRecommend3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i("NewsRecommend","Recommend3 click event");
             }
         });
     }
