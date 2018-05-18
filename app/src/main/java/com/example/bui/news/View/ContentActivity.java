@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.bui.news.R;
-import com.example.bui.news.Service.GetNewsService;
+import com.example.bui.news.Service.GetNewsServiceVolley;
 
 public class ContentActivity extends AppCompatActivity {
     private TextView textViewContent;
@@ -16,6 +16,7 @@ public class ContentActivity extends AppCompatActivity {
     private TextView textViewRecommend2;
     private TextView textViewRecommend3;
     private TextView textViewTitleRecommend;
+    private GetNewsServiceVolley getNewsServiceVolley;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,8 @@ public class ContentActivity extends AppCompatActivity {
         textViewTitleRecommend.setText("Ralated News");
 
         String url = "http://203.162.88.120:443/getByTitle/Israel%20looks%20to%20US%20for%20bank%20chief";
-        new GetNewsService(this.textViewContent, this.textViewRecommend, this.textViewRecommend2, this.textViewRecommend3).execute(url);
-
-        textViewRecommend = (TextView) findViewById(R.id.textViewRecommend);
+        getNewsServiceVolley = new GetNewsServiceVolley(this, textViewContent, textViewRecommend, textViewRecommend2, textViewRecommend3);
+        getNewsServiceVolley.getNewsService(url);
 
         textViewRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
