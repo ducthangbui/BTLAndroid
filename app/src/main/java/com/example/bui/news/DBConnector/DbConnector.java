@@ -234,7 +234,7 @@ public class DbConnector extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         //the number of rows affected
-        return db.delete("News", "Id = ?", new String[]{String.valueOf(news.getId())});
+        return db.delete("Bookmark", "Tittle = ?", new String[]{news.getTitle()});
     }
 
     public int deleteNews(News news) {

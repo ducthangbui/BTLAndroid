@@ -9,8 +9,8 @@ public class Bookmark {
         this.title = title;
     }
 
-    public Bookmark(int id) {
-        this.id = id;
+    public Bookmark(String title) {
+        this.title = title;
     }
 
     public int getId() {

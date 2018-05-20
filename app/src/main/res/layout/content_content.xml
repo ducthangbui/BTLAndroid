@@ -19,6 +19,12 @@
             android:layout_margin="@dimen/text_margin"
             android:text="@string/large_text" />
 
+        <Button
+            android:id="@+id/btnBookmark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add to Bookmark"/>
+
         <TextView
             android:id="@+id/textViewTitleRecommend"
             android:layout_width="wrap_content"
@@ -57,6 +63,8 @@
             android:textSize="14sp"
             android:background="?attr/selectableItemBackground"
             android:textStyle="bold" />
+
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

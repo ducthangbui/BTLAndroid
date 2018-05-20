@@ -58,7 +58,7 @@ public class NewsListAdapter extends BaseAdapter {
 
     public void addListNewsAdapteṛ̣̣̣̣̣̣(List<News> list){
         //Add list to current array list of data
-        this.listNews.addAll(list);
+        this.listNews.addAll(0, list);
         //Notify UI
         this.notifyDataSetChanged();
     }

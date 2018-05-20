@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_topics"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Topics" />
+            android:icon="@drawable/icons8_news_24"
+            android:title="All News" />
         <item
             android:id="@+id/nav_bookmarked"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icons8_bookmark_24"
             android:title="Bookmarked" />
 
     </group>
@@ -19,23 +19,23 @@
         <menu>
             <item
                 android:id="@+id/nav_tech"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/icons8_robot_24"
                 android:title="Tech" />
             <item
                 android:id="@+id/nav_business"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icons8_business_24"
                 android:title="Business" />
             <item
                 android:id="@+id/nav_entertainment"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/icons8_theatre_mask_24"
                 android:title="Entertainment" />
             <item
                 android:id="@+id/nav_politics"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icons8_us_capitol_24"
                 android:title="Politics" />
             <item
                 android:id="@+id/nav_sport"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icons8_sport_24"
                 android:title="Sport" />
         </menu>
     </item>

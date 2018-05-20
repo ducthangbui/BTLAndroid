@@ -10,10 +10,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bui.news.View.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class GetNewsServiceVolley {
     private TextView textViewContent;
@@ -31,7 +33,8 @@ public class GetNewsServiceVolley {
     }
 
     public void getNewsService(String url) {
-        Log.i("GetNewsServiceVolley","start");
+        Log.i("GetNewsServiceVolley","start " + url);
+        Log.i("GetMoreServiceVolley","Context: " + context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -46,10 +49,20 @@ public class GetNewsServiceVolley {
                         content = jsonArray.getJSONObject(i).optString("content").toString();
                         textViewContent.setText(content);
                         JSONArray listRecommend = jsonArray.getJSONObject(i).optJSONArray("recommend");
-                        Log.i("GetNewsServiceVolley", "Content[0]:" + listRecommend.getString(0));
-                        textViewRecommend.setText(listRecommend.getString(0));
-                        textViewRecommend2.setText(listRecommend.getString(1));
-                        textViewRecommend3.setText(listRecommend.getString(2));
+
+                        if(listRecommend == null){
+                            Log.i("GetNewsServiceVolley","listRecommend: null");
+                            textViewRecommend.setText("");
+                            textViewRecommend2.setText("");
+                            textViewRecommend3.setText("");
+                        }
+                        else {
+                            Log.i("GetNewsServiceVolley", "Content[0]:" + listRecommend.getString(0));
+                            textViewRecommend.setText(listRecommend.getString(0));
+                            textViewRecommend2.setText(listRecommend.getString(1));
+                            textViewRecommend3.setText(listRecommend.getString(2));
+                        }
+
                     }
 
                 } catch (JSONException e) {
