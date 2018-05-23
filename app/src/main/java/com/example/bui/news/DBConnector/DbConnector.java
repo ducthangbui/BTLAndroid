@@ -88,10 +88,11 @@ public class DbConnector extends SQLiteOpenHelper {
     }
 
     public List<Bookmark> searchBookmarks(String tittle) {
-        Log.i(TAG, "searchBookmarks ...");
+        Log.i(TAG, "searchBookmarks ..." + tittle);
         List<Bookmark> list_news = new ArrayList<Bookmark>();
 
-        String script = "SELECT * FROM Bookmark WHERE Tittle = '" + tittle + "'";
+        String script = "SELECT * FROM Bookmark WHERE Tittle LIKE '%" + tittle + "%'";
+        Log.i(TAG, "script: " + script);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(script, null);
         if(cursor.moveToFirst()){

@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private int to;
     private String urlGlobal = "";
     private MainController mainController = new MainController();
+    private EditText editTextSearch;
+    private Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.getHeaderView(0);
+        editTextSearch = (EditText) headerView.findViewById(R.id.editTextSearch);
+        editTextSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    if(keyCode == KeyEvent.KEYCODE_ENTER){
+                        Log.i("MainActivity","searchEditTextEvent: " + editTextSearch.getText());
+                        String url = "http://203.162.88.120:443/search/" + editTextSearch.getText();
+                        mainController.clickNavButton(url, MainActivity.this);
+                    }
+                }
+                return false;
+            }
+        });
 
         listViewNews = (ListView) findViewById(R.id.listViewNews);
 
@@ -80,11 +101,20 @@ public class MainActivity extends AppCompatActivity
             String url = "http://203.162.88.120:443/getPage/" + from + "to" + to;
             type = "init";
             getNewsService(url);
-        }else{
+        } /*else if(urlGlobal.contains("search")){
             type = "init";
-            Log.i("MainActivity","urlGlobal: " + urlGlobal);
-            String url = urlGlobal + from + "to" + to;
-            getNewsService(url);
+            getNewsService(urlGlobal);
+        }*/else{
+            type = "init";
+            if(urlGlobal.contains("search")) {
+                type = "init";
+                getNewsService(urlGlobal);
+            }else {
+                Log.i("MainActivity","urlGlobal: " + urlGlobal);
+                String url = urlGlobal + from + "to" + to;
+                getNewsService(url);
+            }
+
         }
 
 
@@ -189,7 +219,7 @@ public class MainActivity extends AppCompatActivity
             String url = "http://203.162.88.120:443/getByTopic/tech&";
             mainController.clickNavButton(url, MainActivity.this);
         } else if (id == R.id.nav_view){
-
+            Log.i("MainActivity","nav_view");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

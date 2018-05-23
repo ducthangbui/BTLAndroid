@@ -1,6 +1,8 @@
 package com.example.bui.news.Model;
 
-public class Bookmark {
+import java.io.Serializable;
+
+public class Bookmark implements Serializable {
     private int id;
     private String title;
 
